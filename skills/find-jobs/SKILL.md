@@ -1,0 +1,104 @@
+---
+name: find-jobs
+description: >
+  Runs an on-demand job scan against the user's saved search, filters the results against
+  their preferences, and surfaces the matches. Use when the user says "scan for jobs,"
+  "find me jobs," "any new roles," "what's out there," "run my job search," "check for
+  new postings," or "find matches." Pulls live results using the user's logged-in browser
+  (Claude-in-Chrome) when available, or a paste flow when it isn't. Classifies each role,
+  removes duplicates already in the tracker, and offers to log matches. Requires a profile
+  from job-search-setup; if none exists, route there first.
+---
+
+# Find Jobs — On-Demand Scan
+
+Pull fresh roles from the user's saved search, cut the noise, and show them what's worth their attention. This is the on-demand replacement for an always-on scraper: it runs only when asked, on a normal machine.
+
+## Step 1: Load the profile
+
+Read `job-search/profile.md` from the user's Cowork folder.
+
+- **No profile?** Tell the user you need to set up their search first, and hand off to `job-search-setup`. Don't guess preferences.
+- **No saved search in the profile?** Run the saved-search step of `job-search-setup`, then continue.
+
+Pull out: target titles, seniority, location/work-mode, comp floor, strong-fit signals, exclusions, skip-list companies, and the saved-search URL(s).
+
+## Step 2: Get the results
+
+Try these in order. Use the first one that works.
+
+### Method A — Logged-in browser (preferred)
+
+Use the Claude-in-Chrome extension to read the live search.
+
+1. Confirm a browser is connected (`list_connected_browsers`). If the Chrome tools aren't loaded, load them via ToolSearch (`query: "chrome", max_results: 20`).
+2. `navigate` to the saved-search URL.
+3. `get_page_text` (and scroll / read more if the board lazy-loads) to capture the visible result cards.
+4. If the page shows a login wall or "no results," tell the user what you saw and fall back to Method B.
+
+This sees what the user would see, including results behind their login. It does **not** log in for them — it uses the session they already have.
+
+### Method B — Paste flow (universal fallback)
+
+If no drivable browser is available, or Method A hit a wall:
+
+- Give the user their saved-search URL and ask them to open it, then paste the results (or the whole page text) back. Or ask them to paste a list of roles they're looking at.
+
+Either way, you end up with raw result text to parse. Never block the scan just because the browser isn't connected — the paste flow always works.
+
+> Do not try to fetch LinkedIn (or similar) result pages with web_fetch/curl/python — they render client-side and return an empty shell, and scraping them programmatically is off-limits. Use the browser the user controls, or the paste flow.
+
+## Step 3: Parse into job cards
+
+From the captured text, extract one record per posting:
+
+- **company**
+- **role** (title as posted)
+- **location** (and remote/hybrid/onsite if shown)
+- **comp** (only if the posting lists it — most don't)
+- **url** (the direct posting link)
+
+Discard obvious junk: pagination text, "promoted" labels, ads, anything under ~20 characters or missing both a company and a title.
+
+## Step 4: Remove duplicates
+
+Read the tracker (`job-search/applications.csv`) if it exists. Drop any posting already recorded there — match on company + role, allowing for fuzzy variation ("Sr. Product Manager" == "Senior Product Manager"). This prevents re-surfacing roles the user already saw, applied to, or skipped. If there's no tracker yet, skip this step.
+
+## Step 5: Classify each role
+
+Apply the rubric in `references/classification-rubric.md`, using the user's profile as the rule set. Tag every surviving role:
+
+- **STRONG** — clear fit and hits a strong-fit signal. Lead with these.
+- **INCLUDE** — fits the basic criteria, worth a look.
+- **EXCLUDE** — fails a rule (wrong level, excluded function/industry, skip-list company, wrong location). Don't show these by default; keep a count.
+
+When genuinely unsure, lean INCLUDE. Better to show a borderline role and let the user dismiss it than to silently bury a good one. This mirrors how a well-tuned classifier behaves: high recall, let the human make the final cut.
+
+## Step 6: Present the matches
+
+Lead with a one-line summary: "12 new roles, 3 strong." Then list STRONG first, then INCLUDE, grouped and skimmable. For each role:
+
+```
+[STRONG] Company — Role
+  Location · Comp (if listed)
+  Why it fits: <one line tied to a profile signal>
+  <url>
+```
+
+Keep the "why" to a single, specific line — name the signal it hit ("regulated industry + 0-to-1," not "good match"). If you dropped roles, say so briefly: "Hid 8 (4 wrong level, 2 staffing firms, 2 already tracked)." Don't dump the excludes unless asked.
+
+## Step 7: Offer to log them
+
+Ask if they want the matches saved to the tracker as prospects:
+
+> "Want me to add the strong ones to your tracker so they're easy to find later?"
+
+If yes, hand the selected roles to `application-tracker` to append with status `prospect`. This is also what makes future scans dedupe correctly — anything logged won't resurface.
+
+## Principles
+
+- **Run only when asked.** No background loop, no schedule unless the user set one up via `job-search-automation`.
+- **High recall, honest filtering.** Surface borderline roles; explain what you cut. The user's time is better spent dismissing than digging.
+- **Specific fit reads.** "Why it fits" should reference a real signal from their profile, never a generic compliment.
+- **Never scrape around a login.** Use the browser the user controls or the paste flow. No headless workarounds.
+- **The tracker is the memory.** Dedup depends on logging. Encourage saving matches so the next scan stays clean.
