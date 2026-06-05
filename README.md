@@ -1,4 +1,4 @@
-![Job Search Agent. Turn Claude into your job search assistant.](banner.svg)
+![Job Search Agent. Turn Claude into your job search assistant.](https://github.com/kevinmmiddleton/job-search-agent/raw/main/banner.svg)
 
 # Job Search Agent
 
@@ -14,6 +14,14 @@ If you've ever seen a "job search automation" setup that needs a dedicated compu
 - **Prep for interviews** — paste a job description and get a full, role-specific interview guide: company research, role analysis, fit mapping against your background, scripted answers, smart questions to ask, and red flags to probe.
 - **Automate it (optionally)** — explains how to run the scan on a schedule with a Cowork scheduled task (no hardware), and what it would take to build a full always-on pipeline if you ever want to.
 
+## Install
+
+Download the plugin: **[job-search-agent.plugin](https://github.com/kevinmmiddleton/job-search-agent/releases/latest/download/job-search-agent.plugin)**
+
+Then open Cowork and drag the file into the window, or go to **Settings → Capabilities → Install plugin** and select it.
+
+That's the whole install. The five skills below will be available the next time you start a conversation.
+
 ## First-time setup
 
 Say **"set up my job search"**. It asks a handful of questions about what you're looking for and your background (about five minutes), saves a profile, and helps you build a saved search. Every other tool reads that profile, so you only answer once.
@@ -28,7 +36,7 @@ Say **"set up my job search"**. It asks a handful of questions about what you're
 
 ## What you need
 
-- **Cowork** (the desktop app you're reading this in).
+- **Cowork** (the desktop app).
 - **A browser Claude can drive** for the scan step — the Claude-in-Chrome extension. If you don't have it, the scan falls back to a paste-the-results flow that works for everyone. See `CONNECTORS.md`.
 - **A folder Cowork can write to** for your profile and tracker. Setup creates a `job-search/` folder there.
 
@@ -48,10 +56,10 @@ Nothing leaves your machine except the web searches and page reads you'd do anyw
 
 ## The five tools
 
-| Tool | Trigger | What it does |
-|------|---------|--------------|
-| `job-search-setup` | "set up my job search" | Onboards your profile and builds a saved search |
-| `find-jobs` | "scan for jobs" | Pulls and filters fresh roles on demand |
-| `application-tracker` | "I applied", "what's pending" | Maintains your CSV tracker + pipeline status |
-| `interview-guide-engine` | paste a JD, "prep me" | Generates a role-specific interview guide |
-| `job-search-automation` | "automate this" | Sets up scheduled scans + explains the full-pipeline path |
+| Tool                     | Trigger                       | What it does                                              |
+| ------------------------ | ----------------------------- | --------------------------------------------------------- |
+| `job-search-setup`       | "set up my job search"        | Onboards your profile and builds a saved search           |
+| `find-jobs`              | "scan for jobs"               | Pulls and filters fresh roles on demand                   |
+| `application-tracker`    | "I applied", "what's pending" | Maintains your CSV tracker + pipeline status              |
+| `interview-guide-engine` | paste a JD, "prep me"         | Generates a role-specific interview guide                 |
+| `job-search-automation`  | "automate this"               | Sets up scheduled scans + explains the full-pipeline path |
