@@ -1,6 +1,7 @@
 {
   "name": "job-search-agent",
-  "version": "0.1.0",
+  "version": "0.1.1",
+  "license": "MIT",
   "description": "A lightweight, on-demand job search toolkit. Set up a reusable saved search, scan for matching roles using your own logged-in browser, track applications in a local file, and generate role-specific interview guides. No servers, no scrapers, no always-on machine required.",
   "author": {
     "name": "Kevin Middleton"
