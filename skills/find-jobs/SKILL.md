@@ -48,6 +48,10 @@ Either way, you end up with raw result text to parse. Never block the scan just 
 
 > Do not try to fetch LinkedIn (or similar) result pages with web_fetch/curl/python — they render client-side and return an empty shell, and scraping them programmatically is off-limits. Use the browser the user controls, or the paste flow.
 
+### Watchlist sweep (runs alongside A or B)
+
+If the profile has a **Companies to Watch** list, also sweep those companies' public ATS feeds — Greenhouse, Lever, and Ashby publish every company's open roles as documented public JSON, no browser or login needed. Method and endpoint patterns are in `references/ats-feeds.md`. Fold the results into the same pipeline as the saved-search results; tag the source so the user can see which matches came from the watchlist.
+
 ## Step 3: Parse into job cards
 
 From the captured text, extract one record per posting:
@@ -94,6 +98,8 @@ Ask if they want the matches saved to the tracker as prospects:
 > "Want me to add the strong ones to your tracker so they're easy to find later?"
 
 If yes, hand the selected roles to `application-tracker` to append with status `prospect`. This is also what makes future scans dedupe correctly — anything logged won't resurface.
+
+For roles the user is seriously considering, offer the deeper read: `evaluate-role` takes the full posting and produces a dimension-scored evaluation with a requirement-by-requirement match against their profile. A scan read is a glance; that's the decision tool.
 
 ## Principles
 

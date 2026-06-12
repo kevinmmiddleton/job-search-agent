@@ -41,6 +41,13 @@ _Last updated: YYYY-MM-DD_
 - **Secondary (narrow):** <paste URL or "(not set yet)">
 - **Board:** LinkedIn
 
+## Companies to Watch (optional)
+
+Companies the user would join in a heartbeat — scanned directly via their public ATS feeds on every `find-jobs` run, no saved search needed.
+
+- **[Company]** — board URL if known (e.g., `boards.greenhouse.io/acme`), or "(ATS unknown)"
+- **[Company]** — `jobs.lever.co/acme`
+
 ## Background (for fit reads + interview prep)
 
 - **Current/most recent title:** Senior Product Manager
@@ -75,4 +82,5 @@ _Last updated: YYYY-MM-DD_
 - **Strong-fit signals** drive the STRONG tier in scans and the score in the tracker. Keep them concrete.
 - **Exclusions** do the heavy lifting in filtering. A precise skip list removes more noise than any keyword adds signal. The named-companies block list grows over time — append, don't replace.
 - **Saved searches** are job-board URLs with filters applied. See `building-a-saved-search.md`.
+- **Companies to watch** get swept directly via public ATS feeds (Greenhouse/Lever/Ashby) on every scan — fast and browser-free. Capture the board URL when known; `find-jobs` can derive it once and save it back.
 - **Proof points** can be deferred to first interview-guide use if the user is in a hurry, but they make every fit read sharper, so capture them when you can.

@@ -24,7 +24,7 @@ company,role,location,comp,url,source,status,score,date_added,date_applied,last_
 ```
 
 - **status** is the lifecycle: `prospect`, `applied`, `screening`, `interview`, `final`, `offer`, `rejected`, `skipped`, `ghosted`, `withdrawn`, `hold`.
-- **score** is 1–3 (3 = strong fit) from the scan, optional.
+- **score** is 1–5 (5 = exceptional), optional. `evaluate-role` writes the full range from its dimension-scored evaluation; quick scans write 4 (STRONG) or 3 (INCLUDE).
 - **date_added** is when it entered the tracker; **date_applied** when the user applied; **last_update** whenever status changes.
 
 If the file doesn't exist, create it with the header row before the first write. See `references/tracker-schema.md` for full column definitions and status meanings.

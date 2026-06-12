@@ -21,6 +21,7 @@ This skill shares one profile with the rest of the Job Search Agent plugin: `job
 1. Read `job-search/profile.md`.
 2. If it doesn't exist, run `job-search-setup` first (it captures the same background fields, so the user never answers twice).
 3. If it exists but the **Background** section is thin or marked `(not set yet)` — missing proof points, voice, or the upfront-about field — collect just those pieces now (see the short flow below) and write them back into the profile's Background and Voice sections. Don't create a separate profile file.
+4. Also read `job-search/story-bank.md` if it exists — the user's accumulated interview stories. Reuse them before drafting anything new (see The Story Bank below).
 
 ### Collecting missing background (only what's absent)
 
@@ -90,6 +91,7 @@ For each answer:
 - Under 150 words. Interviewers tune out after that.
 - Include specific proof points with company names and results
 - For gap questions: acknowledge honestly, bridge to transferable experience
+- For behavioral questions: pull from the story bank first. A banked story the user has already approved (and maybe told before) beats a fresh draft — adapt its emphasis to this role's themes rather than inventing a new one.
 
 ### Step 6: Questions to Ask
 
@@ -160,6 +162,18 @@ After saving, share the guide and offer to update the tracker: if this company i
 When the user completes a round and returns with new info (who they met, what was discussed, next round), add a new round section. Don't overwrite previous rounds.
 
 Update the prep checklist and watch-fors based on what was learned (e.g., "they confirmed fully remote" resolves a watch-for).
+
+---
+
+## The Story Bank
+
+Interview prep compounds when stories are kept, not regenerated. The bank lives at `job-search/story-bank.md` (format in `references/story-bank-template.md`): 5–10 master stories in STAR+R form — Situation, Task, Action, Result, plus **Reflection**, the what-I-learned line that separates a senior answer from a recitation.
+
+**Reuse:** when generating behavioral answers, check the bank for a story whose themes match before drafting new. Adapt the telling to this role (which details to stress), not the facts.
+
+**Deposit:** after a guide is done, if any behavioral answer introduced a story that isn't banked yet, offer once: "Want me to save the [topic] story to your story bank so future guides reuse it?" On yes, write it in STAR+R form with its theme tags. Same after a round debrief — a story the user actually told (and how it landed) is the most valuable deposit there is.
+
+**Maintain:** if the user corrects a story's facts or framing, update the bank, not just the guide. Cap the bank around ten stories; when an eleventh arrives, suggest which existing one it replaces or merges with.
 
 ---
 

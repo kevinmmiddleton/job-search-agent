@@ -13,7 +13,7 @@ Full definition of `job-search/applications.csv` and ready-to-adapt Python for s
 | `url` | Direct link to the posting |
 | `source` | Where it came from (LinkedIn, Indeed, referral, etc.) |
 | `status` | Lifecycle stage (see below) |
-| `score` | 1–3 fit score from the scan (3 = strong); blank if not scanned |
+| `score` | 1–5 fit score (5 = exceptional); blank if never scored. Deep evaluations from `evaluate-role` use the full range; quick scans write 4 for STRONG, 3 for INCLUDE. Rows from older versions may carry legacy 1–3 scan scores. |
 | `date_added` | ISO date the row entered the tracker |
 | `date_applied` | ISO date the user applied (blank until applied) |
 | `last_update` | ISO date of the most recent status change |
